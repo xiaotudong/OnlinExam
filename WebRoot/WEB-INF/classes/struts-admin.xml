@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+	<package name="admin" extends="json-default" namespace="/admin">
+	  	<result-types>
+        	<!-- 如果需要支持excel导出，必须定义以下excel类型 -->
+            <result-type name="excel" class="org.apache.commons.Struts2ExcelResultSupport"/>
+        </result-types>
+	  	
+	  	<action name="Login*" class="com.nkl.admin.action.LoginAction" method="{1}">
+	  		<result name="error">login.jsp</result>
+	  		<result name="success" type="redirect">index.jsp</result>
+	  		<result name="logout" type="redirect">login.jsp</result>
+	  		<result name="regsuccess" type="json">
+	  			<param name="ignoreHierarchy">false</param>
+            	<param name="includeProperties">
+					success,data.*
+				</param>
+            </result>
+            <result name="regerror" type="json">
+            	<param name="ignoreHierarchy">false</param>
+			    <param name="includeProperties">
+					success,err.*
+				</param>
+			</result>
+	  	</action>
+	  	
+	  	<action name="Admin_*" class="com.nkl.admin.action.AdminAction" method="{1}">
+	  		<result name="loginTip" type="redirect">loginTip.jsp</result>
+	  		<result name="infoTip">infoTip.jsp</result>
+	  		<result name="userInfo" type="redirect">modifyInfo.jsp</result>
+	  		<result name="userPwd" type="redirect">modifyPwd.jsp</result>
+	  		<result name="teacherShow">teacherShow.jsp</result>
+	  		<result name="teacherEdit">teacherEdit.jsp</result>
+	  		<result name="userShow">userShow.jsp</result>
+	  		<result name="userEdit">userEdit.jsp</result>
+	  		<result name="ques1Show">ques1Show.jsp</result>
+	  		<result name="ques1Edit">ques1Edit.jsp</result>
+	  		<result name="ques2Show">ques2Show.jsp</result>
+	  		<result name="ques2Edit">ques2Edit.jsp</result>
+	  		<result name="itemShow">itemShow.jsp</result>
+	  		<result name="itemEdit">itemEdit.jsp</result>
+	  		<result name="ques3Show">ques3Show.jsp</result>
+	  		<result name="ques3Edit">ques3Edit.jsp</result>
+	  		<result name="ques4Show">ques4Show.jsp</result>
+	  		<result name="ques4Edit">ques4Edit.jsp</result>
+	  		<result name="paperDetail">paperDetail.jsp</result>
+	  		<result name="scoreShow">scoreShow.jsp</result>
+	  		<result name="detailShow">detailShow.jsp</result>
+	  		<result name="detailEdit">detailEdit.jsp</result>
+	  	</action>
+	  	
+	  	<action name="export*" class="com.nkl.admin.action.ExportExcelAction" method="export{1}">
+			<result name="success" type="excel">
+				template/{1}.xls
+			</result>
+			<result name="error" type="json">
+			    <param name="contentType">text/html;charset=utf-8</param>
+			    <param name="includeProperties">
+					success,errorReason.*
+				</param>
+			</result>
+		</action>
+	</package>
+</struts>    
